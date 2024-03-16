@@ -23,11 +23,14 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user = new User();
-		user.setUsername("admin");
-		user.setPassword(passwordEncoder.encode("123456"));
-		user.setRole("ADMIN");
-		userRepository.save(user);
+		if (userRepository.findByUsernameOrEmail("admin", "admin@mail.com").isEmpty()) {
+			User user = new User();
+			user.setUsername("admin");
+			user.setEmail("admin@mail.com");
+			user.setPassword(passwordEncoder.encode("123456"));
+			user.setRole("ADMIN");
+			userRepository.save(user);
+		}
 	}
 
 }
